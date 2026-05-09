@@ -202,6 +202,11 @@ body::before {
   flex-shrink: 0;
 }
 
+.macos-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
 .download-btn:hover {
   border-color: rgba(0, 0, 0, 0.15);
   background: rgba(255, 255, 255, 0.5);
