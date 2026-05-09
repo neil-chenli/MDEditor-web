@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
   const addParticleEffect = () => {
     const canvas = document.createElement('canvas');
-    canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;opacity:0.6;display:block;';
+    canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;opacity:0.5;display:block;';
     document.body.appendChild(canvas);
 
     const ctx = canvas.getContext('2d');
     const particles = [];
-    const particleCount = 20;
+    const particleCount = 30;
     let animationId = null;
 
     const resize = () => {
@@ -28,10 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
       reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 2;
+        this.size = Math.random() * 2 + 0.5;
         this.speedX = (Math.random() - 0.5) * 0.3;
         this.speedY = (Math.random() - 0.5) * 0.3;
-        this.opacity = Math.random() * 0.4 + 0.5;
+        this.opacity = Math.random() * 0.5 + 0.2;
       }
       update() {
         this.x += this.speedX;
