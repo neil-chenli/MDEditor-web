@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const addParticleEffect = () => {
     const canvas = document.createElement('canvas');
-    canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;opacity:0.5;display:block;';
+    canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.5;display:block;';
     document.body.appendChild(canvas);
 
     const ctx = canvas.getContext('2d');
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
       draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+        ctx.fillStyle = `rgba(80, 80, 80, ${this.opacity})`;
         ctx.fill();
       }
     }
