@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MD Editor - 一款轻量级所见即所得的Markdown查看编辑器，支持实时预览、多文档管理、十种主题风格。">
+  <meta name="keywords" content="Markdown,编辑器,MD Editor,所见即所得,写作工具">
+  <meta property="og:title" content="MD Editor —— 写作，本该如此流畅">
+  <meta property="og:description" content="一款轻量级所见即所得的Markdown查看编辑器">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mdeditor.neildata.com">
+  <meta property="og:image" content="https://mdeditor.neildata.com/og-preview.png">
+  <title>MDEditor</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect x='4' y='6' width='32' height='28' rx='3' fill='none' stroke='%231a1a1a' stroke-width='2'/><path d='M10 14L14 18L10 22' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M16 22H26' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round'/><path d='M16 16H22' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round'/><path d='M16 19H20' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round'/></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <p class="subtitle">一款Markdown查看编辑器</p>
+      <h1 class="title">MD Editor</h1>
+      <p class="tagline">Elegance in simplicity</p>
+
+      <div class="features">
+        <div class="feature-item">
+          <span>所见即所得，实时预览</span>
+        </div>
+        <div class="feature-item">
+          <span>秒级启动，轻量便携</span>
+        </div>
+        <div class="feature-item">
+          <span>多文档管理，标签切换</span>
+        </div>
+      </div>
+
+      <div class="download-section">
+        <p class="download-hint">立即下载</p>
+        <div class="download-buttons">
+          <a href="downloads/MDEditor_Win_Setup.exe" class="download-btn windows-btn" download>
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+            </svg>
+            <span class="btn-text">Windows</span>
+          </a>
+          <a href="downloads/MDEditor_Mac.dmg" class="download-btn macos-btn" download>
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+            </svg>
+            <span class="btn-text">macOS</span>
+          </a>
+        </div>
+        <p class="download-meta">
+          <span>当前版本 v1.0.0</span>
+          <span>·</span>
+          <span>发布于 2025-05</span>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+  <div class="toast" id="toast"></div>
+</body>
+</html>
