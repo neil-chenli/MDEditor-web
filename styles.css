@@ -46,7 +46,9 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem 2rem 1.5rem 2rem;
+  padding: 2rem;
+  padding-top: max(5rem, 12vh);
+  padding-bottom: 1.5rem;
   position: relative;
   z-index: 1;
 }
