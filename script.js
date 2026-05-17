@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const addParticleEffect = () => {
     const canvas = document.createElement('canvas');
     canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.5;display:block;';
@@ -97,6 +97,50 @@ document.addEventListener('DOMContentLoaded', () => {
     toast.classList.add('visible');
     setTimeout(() => toast.classList.remove('visible'), 2500);
   };
+
+  const loadVersionInfo = async () => {
+    try {
+      const response = await fetch('/version.json?t=' + Date.now());
+      if (!response.ok) return null;
+      return await response.json();
+    } catch {
+      return null;
+    }
+  };
+
+  const versionInfo = await loadVersionInfo();
+
+  if (versionInfo) {
+    const windowsBtn = document.querySelector('.download-btn.windows-btn');
+    const macBtn = document.querySelector('.download-btn.macos-btn');
+
+    if (windowsBtn && versionInfo.downloads.windows) {
+      windowsBtn.setAttribute('href', 'downloads/' + versionInfo.downloads.windows);
+    }
+    if (macBtn && versionInfo.downloads.macos) {
+      macBtn.setAttribute('href', 'downloads/' + versionInfo.downloads.macos);
+    }
+
+    const downloadMeta = document.querySelector('.download-meta');
+    if (downloadMeta) {
+      let versionText = '当前版本';
+      let dateText = '';
+      
+      if (versionInfo.latestVersion && versionInfo.latestVersion !== 'unknown') {
+        versionText += ' v' + versionInfo.latestVersion;
+      } else {
+        versionText += ' v1.0.17';
+      }
+      
+      if (versionInfo.releaseDate && versionInfo.releaseDate !== 'unknown') {
+        dateText = ' · 发布于 ' + versionInfo.releaseDate;
+      } else {
+        dateText = ' · 发布于 2026-05-09';
+      }
+      
+      downloadMeta.innerHTML = `<span>${versionText}</span><span>${dateText}</span>`;
+    }
+  }
 
   document.querySelectorAll('.download-btn').forEach(btn => {
     btn.addEventListener('click', async (e) => {

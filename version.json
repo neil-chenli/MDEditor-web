@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2026-05-17T23:35:40.573Z",
+  "latestVersion": "1.0.40",
+  "releaseDate": "2026-05-17",
+  "files": [
+    {
+      "filename": "MDEditor_1.0.40_x64-setup.exe",
+      "version": "1.0.40",
+      "platform": "windows",
+      "size": 5430419,
+      "modified": "2026-05-17T23:13:56.488Z"
+    },
+    {
+      "filename": "MDEditor_1.0.32_aarch64.dmg",
+      "version": "1.0.32",
+      "platform": "macos",
+      "size": 7151536,
+      "modified": "2026-05-16T08:04:12.855Z"
+    },
+    {
+      "filename": "MDEditor_Win_Setup.exe",
+      "version": "unknown",
+      "platform": "windows",
+      "size": 5403183,
+      "modified": "2026-05-14T00:52:01.169Z"
+    },
+    {
+      "filename": "MDEditor_Mac.dmg",
+      "version": "unknown",
+      "platform": "macos",
+      "size": 7131313,
+      "modified": "2026-05-13T04:37:18.813Z"
+    }
+  ],
+  "downloads": {
+    "windows": "MDEditor_1.0.40_x64-setup.exe",
+    "macos": "MDEditor_1.0.32_aarch64.dmg"
+  }
+}

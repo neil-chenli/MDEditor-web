@@ -1,0 +1,91 @@
+name: Update Version Info
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'downloads/**'
+  workflow_dispatch:
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: Generate version.json
+      run: |
+        const fs = require('fs');
+        const path = require('path');
+        
+        const downloadsDir = path.join(__dirname, 'downloads');
+        const files = fs.readdirSync(downloadsDir).filter(file => {
+          const ext = path.extname(file).toLowerCase();
+          return ext === '.exe' || ext === '.dmg' || ext === '.zip';
+        });
+        
+        const fileInfo = files.map(file => {
+          const filePath = path.join(downloadsDir, file);
+          const stats = fs.statSync(filePath);
+          
+          let version = 'unknown';
+          const versionMatch = file.match(/v?(\d+\.\d+\.\d+)/i);
+          if (versionMatch) {
+            version = versionMatch[1];
+          }
+          
+          let platform = 'unknown';
+          const ext = path.extname(file).toLowerCase();
+          if (ext === '.exe' || file.toLowerCase().includes('win')) platform = 'windows';
+          else if (ext === '.dmg' || file.toLowerCase().includes('mac')) platform = 'macos';
+          
+          return {
+            filename: file,
+            version: version,
+            platform: platform,
+            size: stats.size,
+            modified: stats.mtime.toISOString()
+          };
+        });
+        
+        fileInfo.sort((a, b) => new Date(b.modified) - new Date(a.modified));
+        
+        const latestWindows = fileInfo.find(f => f.platform === 'windows');
+        const latestMac = fileInfo.find(f => f.platform === 'macos');
+        
+        const latestVersion = latestWindows?.version || latestMac?.version || 'unknown';
+        const latestDate = fileInfo[0]?.modified ? new Date(fileInfo[0].modified).toISOString().split('T')[0] : 'unknown';
+        
+        const result = {
+          generatedAt: new Date().toISOString(),
+          latestVersion: latestVersion,
+          releaseDate: latestDate,
+          files: fileInfo,
+          downloads: {
+            windows: latestWindows?.filename || null,
+            macos: latestMac?.filename || null
+          }
+        };
+        
+        fs.writeFileSync(path.join(__dirname, 'version.json'), JSON.stringify(result, null, 2));
+        console.log('version.json generated successfully!');
+        console.log(JSON.stringify(result, null, 2));
+      shell: node {0}
+    
+    - name: Commit and push if changed
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add version.json
+        git diff --quiet && git diff --staged --quiet || (git commit -m "chore: auto-update version.json" && git push)
