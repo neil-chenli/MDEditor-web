@@ -121,24 +121,40 @@ document.addEventListener('DOMContentLoaded', async () => {
       macBtn.setAttribute('href', 'downloads/' + versionInfo.downloads.macos);
     }
 
-    const downloadMeta = document.querySelector('.download-meta');
-    if (downloadMeta) {
-      let versionText = '当前版本';
-      let dateText = '';
-      
-      if (versionInfo.latestVersion && versionInfo.latestVersion !== 'unknown') {
-        versionText += ' v' + versionInfo.latestVersion;
-      } else {
-        versionText += ' v1.0.17';
+    // 更新 Windows 版本信息
+    const windowsVersionEl = document.querySelector('.windows-version');
+    if (windowsVersionEl) {
+      const windowsFile = versionInfo.files.find(f => f.platform === 'windows' && f.filename === versionInfo.downloads.windows);
+      if (windowsFile) {
+        const versionEl = windowsVersionEl.querySelector('.version-number');
+        const dateEl = windowsVersionEl.querySelector('.version-date');
+        
+        if (versionEl) {
+          versionEl.textContent = windowsFile.version !== 'unknown' ? 'v' + windowsFile.version : 'v1.0.17';
+        }
+        if (dateEl) {
+          const date = new Date(windowsFile.modified);
+          dateEl.textContent = date.getFullYear() + '-' + (date.getMonth() + 1) + '.' + date.getDate();
+        }
       }
-      
-      if (versionInfo.releaseDate && versionInfo.releaseDate !== 'unknown') {
-        dateText = ' · 发布于 ' + versionInfo.releaseDate;
-      } else {
-        dateText = ' · 发布于 2026-05-09';
+    }
+
+    // 更新 macOS 版本信息
+    const macosVersionEl = document.querySelector('.macos-version');
+    if (macosVersionEl) {
+      const macFile = versionInfo.files.find(f => f.platform === 'macos' && f.filename === versionInfo.downloads.macos);
+      if (macFile) {
+        const versionEl = macosVersionEl.querySelector('.version-number');
+        const dateEl = macosVersionEl.querySelector('.version-date');
+        
+        if (versionEl) {
+          versionEl.textContent = macFile.version !== 'unknown' ? 'v' + macFile.version : 'v1.0.17';
+        }
+        if (dateEl) {
+          const date = new Date(macFile.modified);
+          dateEl.textContent = date.getFullYear() + '-' + (date.getMonth() + 1) + '.' + date.getDate();
+        }
       }
-      
-      downloadMeta.innerHTML = `<span>${versionText}</span><span>${dateText}</span>`;
     }
   }
 
