@@ -55,17 +55,44 @@ body::before {
 
 .hero {
   text-align: center;
-  max-width: 800px;
+  max-width: 900px;
   width: 100%;
-  margin-top: -4rem;
-  padding-top: 1rem;
+  margin-top: -3rem;
+  padding-top: 2rem;
+}
+
+/* 大屏优化 */
+@media (min-width: 1400px) {
+  .hero {
+    max-width: 1100px;
+    margin-top: -2rem;
+  }
+  
+  .features {
+    gap: 4rem;
+    margin-top: 4rem;
+    margin-bottom: 5rem;
+  }
+  
+  .feature-item {
+    min-width: 200px;
+  }
+  
+  .feature-keyword {
+    font-size: 2rem;
+  }
+  
+  .feature-desc {
+    font-size: 14px;
+    max-width: 160px;
+  }
 }
 
 .subtitle {
-  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-size: clamp(0.875rem, 1.5vw, 1.1rem);
   color: var(--color-secondary);
   font-weight: 400;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .subtitle .highlight {
@@ -74,10 +101,10 @@ body::before {
 }
 
 .title {
-  font-size: clamp(3rem, 8vw, 5rem);
-  font-weight: 300;
+  font-size: clamp(3.5rem, 7vw, 6rem);
+  font-weight: 200;
   letter-spacing: -0.02em;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
   animation: float 5s ease-in-out infinite;
 }
 
@@ -87,11 +114,11 @@ body::before {
 }
 
 .tagline {
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
   color: var(--color-secondary);
   font-weight: 300;
   font-style: italic;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .features {
@@ -180,26 +207,26 @@ body::before {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  padding: 0.875rem 2rem;
+  gap: 0.875rem;
+  padding: 1rem 2.5rem;
   border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 12px;
+  border-radius: 14px;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   color: var(--color-text);
   text-decoration: none;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   transition: border-color 0.3s ease,
               background-color 0.3s ease,
               box-shadow 0.3s ease,
               transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08),
-              0 1px 2px rgba(0, 0, 0, 0.04),
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1),
+              0 2px 4px rgba(0, 0, 0, 0.05),
               inset 0 1px 0 rgba(255, 255, 255, 0.8),
               inset 0 -1px 0 rgba(0, 0, 0, 0.05);
-  min-width: 160px;
+  min-width: 180px;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 }
@@ -223,14 +250,14 @@ body::before {
 }
 
 .download-btn svg {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
 }
 
 .macos-btn svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
 }
 
 .download-btn:hover {
@@ -311,5 +338,55 @@ body::before {
   .download-btn {
     padding: 0.75rem 1rem;
     min-width: auto;
+  }
+}
+
+/* 超大屏幕优化 */
+@media (min-width: 1920px) {
+  .container {
+    padding: 3rem 4rem;
+  }
+  
+  .hero {
+    max-width: 1200px;
+  }
+  
+  .title {
+    font-size: clamp(4rem, 6vw, 7rem);
+  }
+  
+  .features {
+    gap: 5rem;
+    margin-top: 5rem;
+    margin-bottom: 6rem;
+  }
+  
+  .feature-item {
+    min-width: 220px;
+  }
+  
+  .feature-keyword {
+    font-size: 2.25rem;
+  }
+  
+  .feature-desc {
+    font-size: 15px;
+    max-width: 180px;
+  }
+  
+  .download-btn {
+    padding: 1.125rem 3rem;
+    min-width: 200px;
+    font-size: 1rem;
+  }
+  
+  .download-btn svg {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .macos-btn svg {
+    width: 24px;
+    height: 24px;
   }
 }
