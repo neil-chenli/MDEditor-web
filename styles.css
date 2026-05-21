@@ -47,7 +47,7 @@ body::before {
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  padding-top: max(5rem, 12vh);
+  padding-top: max(3rem, 8vh);
   padding-bottom: 1.5rem;
   position: relative;
   z-index: 1;
@@ -346,7 +346,7 @@ body::before {
 @media (max-width: 768px) {
   .container {
     padding: 1.5rem;
-    padding-top: max(4rem, 10vh);
+    padding-top: max(2.5rem, 6vh);
   }
   
   .hero {
@@ -412,7 +412,7 @@ body::before {
 @media (max-width: 640px) {
   .container {
     padding: 1.25rem;
-    padding-top: max(3rem, 8vh);
+    padding-top: max(2rem, 5vh);
   }
   
   .features {
@@ -450,7 +450,7 @@ body::before {
 @media (max-width: 480px) {
   .container {
     padding: 1rem;
-    padding-top: max(2.5rem, 6vh);
+    padding-top: max(1.5rem, 4vh);
   }
   
   .subtitle {
