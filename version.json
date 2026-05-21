@@ -1,15 +1,8 @@
 {
-  "generatedAt": "2026-05-21T08:00:14.841Z",
-  "latestVersion": "1.0.503",
+  "generatedAt": "2026-05-21T08:00:41.219Z",
+  "latestVersion": "1.0.499",
   "releaseDate": "2026-05-21",
   "files": [
-    {
-      "filename": "MDEditor_1.0.503_x64-setup.exe",
-      "version": "1.0.503",
-      "platform": "windows",
-      "size": 14,
-      "modified": "2026-05-21T07:56:43.176Z"
-    },
     {
       "filename": "MDEditor_1.0.502_aarch64.dmg",
       "version": "1.0.502",
@@ -26,7 +19,7 @@
     }
   ],
   "downloads": {
-    "windows": "MDEditor_1.0.503_x64-setup.exe",
+    "windows": "MDEditor_1.0.499_x64-setup.exe",
     "macos": "MDEditor_1.0.502_aarch64.dmg"
   }
 }
