@@ -311,33 +311,183 @@ body::before {
   opacity: 1;
 }
 
-@media (max-width: 640px) {
+/* 平板和中等屏幕优化 */
+@media (max-width: 1024px) {
+  .hero {
+    max-width: 700px;
+    padding-top: 1.5rem;
+  }
+  
+  .title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+  }
+  
+  .tagline {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    margin-bottom: 2rem;
+  }
+  
+  .features {
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .feature-keyword {
+    font-size: 1.25rem;
+  }
+  
+  .feature-desc {
+    font-size: 13px;
+  }
+}
+
+/* 小屏优化 */
+@media (max-width: 768px) {
   .container {
     padding: 1.5rem;
+    padding-top: max(4rem, 10vh);
   }
+  
+  .hero {
+    max-width: 100%;
+    margin-top: -1rem;
+  }
+  
+  .subtitle {
+    font-size: clamp(0.8125rem, 2vw, 0.9375rem);
+  }
+  
+  .title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 0.25rem;
+  }
+  
+  .tagline {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    margin-bottom: 1.5rem;
+  }
+  
+  .features {
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .feature-item {
+    min-width: 80px;
+  }
+  
+  .feature-keyword {
+    font-size: 1.125rem;
+  }
+  
+  .feature-desc {
+    font-size: 12px;
+    max-width: 100px;
+  }
+  
+  .download-buttons {
+    gap: 1.25rem;
+  }
+  
+  .download-btn {
+    padding: 0.875rem 1.75rem;
+    min-width: 150px;
+    font-size: 0.875rem;
+  }
+  
+  .download-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .macos-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+}
 
+/* 手机竖屏优化 */
+@media (max-width: 640px) {
+  .container {
+    padding: 1.25rem;
+    padding-top: max(3rem, 8vh);
+  }
+  
   .features {
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.25rem;
     align-items: center;
   }
-
+  
+  .feature-item {
+    width: 100%;
+  }
+  
+  .feature-desc {
+    max-width: none;
+  }
+  
   .download-buttons {
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
   }
-
+  
   .download-btn {
     width: 100%;
     max-width: 280px;
     justify-content: center;
   }
+  
+  .version-info {
+    justify-content: center;
+  }
 }
 
+/* 超小屏幕优化 */
 @media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+    padding-top: max(2.5rem, 6vh);
+  }
+  
+  .subtitle {
+    font-size: 0.75rem;
+  }
+  
+  .title {
+    font-size: 1.75rem;
+    letter-spacing: 0;
+  }
+  
+  .tagline {
+    font-size: 0.8125rem;
+  }
+  
+  .feature-keyword {
+    font-size: 1rem;
+  }
+  
+  .feature-desc {
+    font-size: 11px;
+  }
+  
   .download-btn {
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 1.25rem;
     min-width: auto;
+    font-size: 0.8125rem;
+  }
+  
+  .download-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .version-number,
+  .version-date {
+    font-size: 0.5625rem;
   }
 }
 
