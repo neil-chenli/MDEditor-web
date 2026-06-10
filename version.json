@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-10T22:30:21.271Z",
+  "generatedAt": "2026-06-10T22:52:55.530Z",
   "latestVersion": "1.0.602",
   "releaseDate": "2026-06-10",
   "files": [
@@ -7,8 +7,8 @@
       "filename": "MDEditor_1.0.602_aarch64.dmg",
       "version": "1.0.602",
       "platform": "macos",
-      "size": 8168162,
-      "modified": "2026-06-10T22:26:04.308Z"
+      "size": 7757604,
+      "modified": "2026-06-10T22:51:24.716Z"
     },
     {
       "filename": "MDEditor_1.0.602_x64-setup.zip",
