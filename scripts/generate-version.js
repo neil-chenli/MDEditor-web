@@ -35,7 +35,7 @@ const fileInfo = files.map(file => {
   
   let platform = 'unknown';
   const ext = path.extname(file).toLowerCase();
-  if (ext === '.exe' || file.toLowerCase().includes('win')) {
+  if (ext === '.exe' || ext === '.zip' || file.toLowerCase().includes('win')) {
     platform = 'windows';
   } else if (ext === '.dmg' || file.toLowerCase().includes('mac')) {
     platform = 'macos';
