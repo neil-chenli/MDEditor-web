@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-22T08:38:59.196Z",
+  "generatedAt": "2026-07-22T10:36:43.131Z",
   "latestVersion": "1.0.645",
   "releaseDate": "2026-07-22",
   "files": [
@@ -7,8 +7,8 @@
       "filename": "MDEditor_1.0.645_x64-setup.zip",
       "version": "1.0.645",
       "platform": "windows",
-      "size": 11406160,
-      "modified": "2026-07-22T08:33:40.062Z"
+      "size": 11403852,
+      "modified": "2026-07-22T10:35:17.259Z"
     },
     {
       "filename": "MDEditor_1.0.645_aarch64.dmg",
