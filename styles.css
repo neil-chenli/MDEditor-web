@@ -26,6 +26,8 @@ body {
   overflow-x: hidden;
   position: relative;
   padding-top: env(safe-area-inset-top, 0px);
+  display: flex;
+  flex-direction: column;
 }
 
 body::before {
@@ -42,7 +44,7 @@ body::before {
 }
 
 .container {
-  min-height: 100vh;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,6 +53,25 @@ body::before {
   padding-bottom: 1.5rem;
   position: relative;
   z-index: 1;
+}
+
+.site-footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 1rem 1.5rem;
+  font-size: 0.75rem;
+  color: var(--color-hint);
+}
+
+.site-footer a {
+  color: var(--color-hint);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.site-footer a:hover {
+  color: var(--color-secondary);
 }
 
 .hero {
