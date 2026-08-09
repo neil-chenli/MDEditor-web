@@ -2,77 +2,162 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
-  <meta name="description" content="MD Editor - 一款轻量级所见即所得的 Markdown 查看编辑器，支持实时预览、多文档管理、十种主题风格。">
-  <meta name="keywords" content="Markdown，编辑器，MD Editor，所见即所得，写作工具">
-  <meta property="og:title" content="MD Editor —— 写作，本该如此流畅">
-  <meta property="og:description" content="一款轻量级所见即所得的 Markdown 查看编辑器">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mdeditor.neildata.com">
-  <meta property="og:image" content="https://mdeditor.neildata.com/og-preview.png">
-  <title>MDEditor</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect x='4' y='6' width='32' height='28' rx='3' fill='none' stroke='%231a1a1a' stroke-width='2'/><path d='M10 14L14 18L10 22' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M16 22H26' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round'/><path d='M16 16H22' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round'/><path d='M16 19H20' stroke='%231a1a1a' stroke-width='2' stroke-linecap='round'/></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="桌面端文档工作台。把网页、Word、PPT 导入成 Markdown，编辑之后直接生成长图文、演示稿和 PDF，生成完还能继续改。">
+  <title>MDEditor - 桌面端文档工作台</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="container">
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="#top">MDEditor</a>
+      <a class="btn btn-sm" href="#download">下载</a>
+    </div>
+  </header>
+
+  <main id="top">
     <section class="hero">
-      <p class="subtitle"><span class="highlight">AI时代</span> · 必备的Markdown文档编辑器</p>
-      <h1 class="title">MD Editor</h1>
-      <p class="tagline">Elegance in simplicity</p>
+      <div class="starfield" aria-hidden="true"></div>
+      <div class="nebula nebula-a" aria-hidden="true"></div>
+      <div class="nebula nebula-b" aria-hidden="true"></div>
 
-      <div class="features">
-        <div class="feature-item">
-          <div class="feature-keyword">易</div>
-          <div class="feature-desc">所见即所得，三屏同步，极简操作</div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-keyword">快</div>
-          <div class="feature-desc">程序瞬启，文档秒开，多标签并行</div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-keyword">轻</div>
-          <div class="feature-desc">小巧体积 (&lt;20MB)，低耗资源</div>
-        </div>
-      </div>
+      <div class="wrap hero-inner">
+        <p class="eyebrow">AI文档工作台</p>
+        <h1 class="hero-title">让想法，快速成为成果</h1>
+        <p class="hero-lede">
+          从灵感或资料出发，用 AI 快速做成文档、网页和 PPT
+        </p>
 
-      <div class="download-section">
-        <p class="download-hint">立即下载</p>
-        <div class="download-buttons">
-          <div class="download-btn-wrapper">
-            <a href="downloads/MDEditor_Win_Setup.exe" class="download-btn windows-btn" download>
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
-              </svg>
-              <span class="btn-text">Windows</span>
-            </a>
-            <div class="version-info windows-version">
-              <span class="version-number">v1.0.17</span>
-              <span class="version-date">2026-5.7</span>
+        <div class="cosmos">
+          <svg class="cosmos-beams" aria-hidden="true" preserveAspectRatio="none">
+            <g class="beam-in">
+              <g class="beam-line js-beam-in-static"></g>
+              <g class="beam-line beam-pulse js-beam-in-pulse"></g>
+            </g>
+            <g class="beam-out">
+              <g class="beam-line js-beam-out-static"></g>
+              <g class="beam-line beam-pulse js-beam-out-pulse"></g>
+            </g>
+          </svg>
+
+          <!-- 左：来源星球 -->
+          <div class="orbit orbit-in">
+            <p class="orbit-cap">资料<br>来源</p>
+            <ul class="planets">
+              <li class="planet" style="--x:20%; --y:24%; --s:3.5rem; --d:0s">
+                <span class="planet-body">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></svg>
+                </span>
+                <span class="planet-name">网页 URL</span>
+              </li>
+              <li class="planet" style="--x:58%; --y:7%; --s:2.375rem; --d:-2.6s">
+                <span class="planet-body">
+                  <svg class="icon-solid icon-html" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2h16l-1.5 17L12 22l-6.5-3z"/><path d="M8 7h8l-.3 3H10.8l.2 2h4.5l-.4 4-3.1.9-3.1-.9-.2-2h2.4l.1.7.8.2.8-.2.1-1.2H8.6z"/></svg>
+                </span>
+                <span class="planet-name">HTML</span>
+              </li>
+              <li class="planet" style="--x:28%; --y:50%; --s:3.25rem; --d:-1.3s">
+                <span class="planet-body">
+                  <svg class="icon-solid icon-word" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="3"/><path d="M6 7l2.2 10h2.2l1.6-6.1 1.6 6.1h2.2L18 7h-2.1l-1.3 6.3L13 7h-2l-1.6 6.3L8.1 7z"/></svg>
+                </span>
+                <span class="planet-name">Word</span>
+              </li>
+              <li class="planet" style="--x:65%; --y:84%; --s:2.875rem; --d:-4.1s">
+                <span class="planet-body">
+                  <svg class="icon-solid icon-ppt" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="3"/><path d="M7 7h5.4a4 4 0 010 8H10v3H7zm3 3v2h2.2a1 1 0 000-2z"/></svg>
+                </span>
+                <span class="planet-name">PPT</span>
+              </li>
+              <li class="planet" style="--x:23%; --y:90%; --s:2.125rem; --d:-5.4s">
+                <span class="planet-body">
+                  <svg class="icon-solid icon-ai" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a2 2 0 012 2v10a2 2 0 01-2 2H10l-5 3v-3H4a2 2 0 01-2-2V6a2 2 0 012-2z"/><path d="M12 7l1.1 2.7L16 11l-2.9 1.2L12 15l-1.1-2.8L8 11l2.9-1.3z"/></svg>
+                </span>
+                <span class="planet-name">AI 会话</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="beam beam-in-space" aria-hidden="true"></div>
+
+          <!-- 中：转换器 -->
+          <div class="core">
+            <div class="core-halo" aria-hidden="true"></div>
+            <div class="core-ring core-ring-1" aria-hidden="true"></div>
+            <div class="core-ring core-ring-2" aria-hidden="true"></div>
+            <div class="core-label">
+              <p class="core-brand">MDEditor</p>
+              <p class="core-fn">AI智能编辑</p>
             </div>
           </div>
-          <div class="download-btn-wrapper">
-            <a href="downloads/MDEditor_Mac.dmg" class="download-btn macos-btn" download>
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-              </svg>
-              <span class="btn-text">macOS</span>
-            </a>
-            <div class="version-info macos-version">
-              <span class="version-number">v1.0.17</span>
-              <span class="version-date">2026-5.7</span>
-            </div>
+
+          <div class="beam beam-out-space" aria-hidden="true"></div>
+
+          <!-- 右：成品 -->
+          <div class="orbit orbit-out">
+            <p class="orbit-cap">交付<br>成品</p>
+            <ul class="planets">
+              <li class="planet" style="--x:80%; --y:15%; --s:2.375rem; --d:-3.2s">
+                <span class="planet-body">
+                  <svg class="icon-solid icon-markdown" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M5 15V9l3 3 3-3v6M16 9v4M14 11l2 2 2-2"/></svg>
+                </span>
+                <span class="planet-name">Markdown</span>
+              </li>
+              <li class="planet planet-hl" style="--x:28%; --y:18%; --s:3.25rem; --d:-0.7s">
+                <span class="planet-body">
+                  <svg class="icon-solid icon-html" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2h16l-1.5 17L12 22l-6.5-3z"/><path d="M8 7h8l-.3 3H10.8l.2 2h4.5l-.4 4-3.1.9-3.1-.9-.2-2h2.4l.1.7.8.2.8-.2.1-1.2H8.6z"/></svg>
+                </span>
+                <span class="planet-name">网页 HTML</span>
+              </li>
+              <li class="planet" style="--x:78%; --y:48%; --s:2.75rem; --d:-4.8s">
+                <span class="planet-body">
+                  <svg class="icon-solid icon-pdf" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h11l5 5v13H4z"/><path d="M15 3v5h5M7 17v-5h2a1.8 1.8 0 010 3.6H7m5-3.6v5m0-5h1.8a2.5 2.5 0 010 5H12"/></svg>
+                </span>
+                <span class="planet-name">PDF</span>
+              </li>
+              <li class="planet" style="--x:32%; --y:66%; --s:2.75rem; --d:-1.9s">
+                <span class="planet-body">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="9.5" cy="8.5" r="1.5"/><path d="M4 16l4.5-4 3 2.6L15 11l5 4.5"/></svg>
+                </span>
+                <span class="planet-name">长图</span>
+              </li>
+              <li class="planet" style="--x:58%; --y:58%; --s:2.125rem; --d:-6.1s">
+                <span class="planet-body">
+                  <svg class="icon-solid icon-word" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="3"/><path d="M6 7l2.2 10h2.2l1.6-6.1 1.6 6.1h2.2L18 7h-2.1l-1.3 6.3L13 7h-2l-1.6 6.3L8.1 7z"/></svg>
+                </span>
+                <span class="planet-name">Word</span>
+              </li>
+              <li class="planet planet-hl" style="--x:49%; --y:94%; --s:3.5rem; --d:-2.4s">
+                <span class="planet-body">
+                  <svg class="icon-solid icon-ppt" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="3"/><path d="M7 7h5.4a4 4 0 010 8H10v3H7zm3 3v2h2.2a1 1 0 000-2z"/></svg>
+                </span>
+                <span class="planet-name">可编辑的PPT</span>
+              </li>
+            </ul>
           </div>
+        </div>
+
+        <div class="hero-cta" id="download">
+          <a class="btn btn-primary js-dl-win" href="#" download>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>
+            <span class="btn-copy"><span>Windows 下载</span><small>v1.0.658</small></span>
+          </a>
+          <a class="btn btn-ghost js-dl-mac" href="#" download>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            <span class="btn-copy"><span>macOS 下载</span><small>v1.0.658</small></span>
+          </a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener">粤ICP备2026111738号-1</a>
+    <div class="wrap">
+      <p class="footer-beian">
+        <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener">粤ICP备2026111738号-1</a>
+      </p>
+    </div>
   </footer>
 
   <script src="script.js"></script>
-  <div class="toast" id="toast"></div>
 </body>
 </html>

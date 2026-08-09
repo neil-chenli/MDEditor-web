@@ -47,16 +47,20 @@
 
 ### 标准流程（推荐）
 
-1. **准备安装包**
+1. **修改新版官网**
+   - 页面文件只修改 `site/` 目录中的 `index.html`、`script.js` 和 `styles.css`
+   - 不要再修改或新增根目录的旧版页面文件
+
+2. **准备安装包（发布新版本时）**
    - 将新版本的安装包放入 `downloads/` 目录
    - **文件名必须包含版本号**，例如：
      - `MDEditor_1.0.503_x64-setup.exe` (Windows)
      - `MDEditor_1.0.503_aarch64.dmg` (macOS)
 
-2. **提交代码**
+3. **提交代码**
    ```bash
-   git add downloads/
-   git commit -m "发布 v1.0.503"
+   git add site/ downloads/
+   git commit -m "更新官网或发布 v1.0.503"
    ```
    
    **此时会自动触发：**
@@ -75,28 +79,32 @@
    ✓ version.json staged for commit
    ```
 
-3. **推送到 GitHub**
+4. **推送到 GitHub**
    ```bash
-   git push
+   git push origin main
    ```
 
-4. **等待自动部署**
-   - Cloudflare Pages 会自动检测代码变化
-   - 大约 1-2 分钟后网站更新完成
+5. **等待自动部署**
+   - Cloudflare Pages 自动构建并发布 `site/`、`version.json` 和 `downloads/`
+   - GitHub Actions 自动将同样的内容部署到阿里云 ECS
+   - 两个网址都会更新：
+     - `https://md.shuyu.com`
+     - `https://mdeditor-web.pages.dev/`
+   - 可在 GitHub Actions 查看 ECS 部署状态
 
 ### 示例：完整发布流程
 
 ```bash
-# 1. 复制新版本的安装包到 downloads 目录
+# 1. 修改 site/ 中的官网文件，或复制新安装包到 downloads/
 cp ../MDEditor/build/MDEditor_1.0.504_x64-setup.exe downloads/
 
-# 2. 添加到 Git
-git add downloads/MDEditor_1.0.504_x64-setup.exe
+# 2. 添加修改
+git add site/ downloads/
 
 # 3. 提交（自动生成 version.json）
-git commit -m "发布 v1.0.504"
+git commit -m "更新官网或发布 v1.0.504"
 
-# 4. 推送
+# 4. 推送，触发两个网站自动部署
 git push origin main
 ```
 
@@ -163,22 +171,23 @@ git push origin main
 
 ```
 MDEditorWebSite/
-├── .git/
-│   └── hooks/
-│       ├── pre-commit          # Git Hook (Unix/Linux/Mac)
-│       └── pre-commit.bat      # Git Hook (Windows)
+├── .github/
+│   └── workflows/
+│       └── deploy-site.yml      # ECS 自动部署工作流
+├── site/                        # 唯一的新版官网源码
+│   ├── index.html
+│   ├── script.js
+│   └── styles.css
 ├── scripts/
-│   ├── generate-version.js     # 版本生成脚本
-│   ├── install-hooks.js        # Hooks 安装脚本
-│   └── install-hooks.bat       # Hooks 安装脚本 (Windows)
-├── downloads/
-│   ├── MDEditor_1.0.503_x64-setup.exe   # Windows 安装包
-│   └── MDEditor_1.0.502_aarch64.dmg     # macOS 安装包
+│   ├── generate-version.js      # 版本生成脚本
+│   ├── install-hooks.js         # Hooks 安装脚本
+│   └── install-hooks.bat        # Hooks 安装脚本 (Windows)
+├── downloads/                   # Windows/macOS 安装包
 ├── version.json                 # 自动生成的版本配置文件
-├── index.html                   # 网站主页
-├── script.js                    # 前端逻辑（动态加载 version.json）
-└── styles.css                   # 样式文件
+└── docs/                        # 项目文档
 ```
+
+`site/` 是唯一需要修改的官网页面目录。根目录的 `index.html`、`styles.css` 和 `script.js` 是供 Cloudflare Pages 发布的同步副本，禁止手动编辑；每次发布前由 `site/` 覆盖同步。
 
 ---
 
@@ -216,34 +225,107 @@ cat version.json
 
 ---
 
-## 🌐 部署到 Cloudflare Pages
+## 🌐 双站自动部署
 
-### 自动部署（推荐）
+两个网址显示同一套新版页面：
 
-1. 在 Cloudflare Pages 中连接 GitHub 仓库
-2. 配置构建设置：
-   - **Production branch**: `main`
-   - **Build command**: （留空，纯静态网站）
-   - **Build output directory**: `/`
-3. 启用自动部署
+- 阿里云正式站：`https://md.shuyu.com`
+- Cloudflare Pages：`https://mdeditor-web.pages.dev/`
 
-每次 `git push` 后，Cloudflare Pages 会自动：
-- 检测代码变化
-- 部署新版本
-- 更新 CDN 缓存
+唯一页面源码位于 `site/`。发布时，两个平台都使用以下内容：
+
+```text
+site/index.html
+site/styles.css
+site/script.js
+version.json
+downloads/
+```
+
+### Cloudflare Pages 配置
+
+在 Cloudflare Pages 项目的 **Settings → Builds & deployments** 中配置：
+
+- **Production branch**：`main`
+- **Root directory**：保持仓库根目录（留空）
+- **Build command**：
+  ```bash
+  rm -rf dist && mkdir -p dist/downloads && cp site/index.html site/styles.css site/script.js dist/ && cp version.json dist/ && cp -r downloads/. dist/downloads/
+  ```
+- **Build output directory**：`dist`
+
+每次 `git push origin main` 后，Cloudflare Pages 会自动构建并发布 `dist/`。
+
+### 阿里云 ECS 配置
+
+ECS 由 GitHub Actions 工作流自动部署：
+
+```text
+.github/workflows/deploy-site.yml
+```
+
+工作流会通过 SSH 将 `site/`、`version.json` 和 `downloads/` 上传到 ECS，并执行服务器上的部署脚本。部署状态可在 GitHub 仓库的 **Actions** 页面查看。
+
+### HTTPS
+
+正式站使用 Let's Encrypt 证书：
+
+```text
+https://md.shuyu.com
+```
+
+证书由 Certbot 自动续期。服务器需要在阿里云安全组放行 TCP `80` 和 `443`。
 
 ### 手动部署
 
 ```bash
-# 使用 Wrangler CLI
-wrangler pages deploy . --project-name=mdeditor
+# Cloudflare Pages
+npx wrangler pages deploy dist --project-name=mdeditor
+
+# ECS 不建议手动上传，优先通过 git push 触发 GitHub Actions
 ```
 
 ---
 
 ## ❓ 故障排查
 
-### 1. Git Hook 没有自动运行？
+### 1. GitHub Actions 部署失败？
+
+先打开 GitHub 仓库的 **Actions** 页面，进入失败的 `部署新版官网到 ECS` 工作流，查看失败步骤。
+
+如果日志包含：
+
+```text
+Host key verification failed
+No ED25519 host key is known
+```
+
+在 ECS 上重新获取主机指纹：
+
+```bash
+ssh-keyscan -H -t ed25519 120.77.146.67
+```
+
+只将输出中以 `|1|` 开头、并包含 `ssh-ed25519` 的完整一行更新到 GitHub Secret：
+
+```text
+ECS_KNOWN_HOSTS
+```
+
+不要使用以 `#` 开头的 SSH 服务版本提示行，也不要提交或公开 `ECS_SSH_KEY`。
+
+确认以下 GitHub Secrets 存在：
+
+```text
+ECS_HOST
+ECS_USER
+ECS_SSH_KEY
+ECS_KNOWN_HOSTS
+```
+
+修正后可在失败运行页面选择 **Re-run jobs → Re-run failed jobs**。
+
+### 2. Git Hook 没有自动运行？
 
 **检查：**
 ```bash
