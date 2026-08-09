@@ -1,0 +1,54 @@
+name: Deploy site to ECS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'version.json'
+      - 'downloads/**'
+      - '.github/workflows/deploy-site.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare deployment archive
+        run: |
+          rm -rf deploy deploy.tar.gz
+          mkdir -p deploy/downloads
+          cp site/index.html site/styles.css site/script.js deploy/
+          cp version.json deploy/
+          cp downloads/* deploy/downloads/
+          tar -czf deploy.tar.gz -C deploy .
+
+      - name: Configure SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.ECS_SSH_KEY }}
+
+      - name: Add ECS host key
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "${{ secrets.ECS_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Upload archive
+        run: |
+          scp -o StrictHostKeyChecking=yes deploy.tar.gz \
+            "${{ secrets.ECS_USER }}@${{ secrets.ECS_HOST }}:/home/${{ secrets.ECS_USER }}/deploy.tar.gz"
+
+      - name: Install site files
+        run: |
+          ssh -o StrictHostKeyChecking=yes \
+            "${{ secrets.ECS_USER }}@${{ secrets.ECS_HOST }}" \
+            'sudo /usr/local/sbin/deploy-md-shuyu-site'
