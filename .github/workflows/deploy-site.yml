@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'site/**'
+      - 'scripts/generate-showcase-manifest.js'
       - 'version.json'
       - 'downloads/**'
       - '.github/workflows/deploy-site.yml'
@@ -23,9 +24,11 @@ jobs:
 
       - name: Prepare deployment archive
         run: |
+          node scripts/generate-showcase-manifest.js
           rm -rf deploy deploy.tar.gz
           mkdir -p deploy/downloads
           cp site/index.html site/styles.css site/script.js deploy/
+          cp -r site/assets deploy/assets
           cp version.json deploy/
           cp downloads/* deploy/downloads/
           tar -czf deploy.tar.gz -C deploy .
