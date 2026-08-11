@@ -5,7 +5,7 @@
 // 下载地址前缀。
 // CDN 未就绪时用相对路径；download.shuyu.com 通了之后
 // 改成 'https://download.shuyu.com/' 即可，其他代码不用动。
-const DL_BASE = 'downloads/';
+const DL_BASE = '/downloads/';
 
 document.addEventListener('DOMContentLoaded', () => {
   initTopbar();
@@ -138,7 +138,7 @@ async function initDownload() {
   const macBtns = document.querySelectorAll('.js-dl-mac');
   const metaEls = document.querySelectorAll('.js-version');
 
-  downloadInfoPromise = fetch('version.json?t=' + Date.now())
+  downloadInfoPromise = fetch('/version.json?t=' + Date.now())
     .then(res => res.ok ? res.json() : null)
     .catch(() => null);
 
