@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="桌面端文档工作台。把网页、Word、PPT 导入成 Markdown，编辑之后直接生成长图文、演示稿和 PDF，生成完还能继续改。">
   <title>MDEditor - 桌面端文档工作台</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
   <header class="topbar">
@@ -22,7 +22,7 @@
       <div class="nebula nebula-b" aria-hidden="true"></div>
 
       <div class="wrap hero-inner">
-        <p class="eyebrow">AI文档工作台</p>
+        <span class="showcase-kicker">AI DOCUMENT WORKSPACE</span>
         <h1 class="hero-title">让想法，快速成为成果</h1>
         <p class="hero-lede">
           从灵感或资料出发，用 AI 快速做成文档、网页和 PPT
@@ -148,6 +148,93 @@
         </div>
       </div>
     </section>
+
+    <section class="showcase-section" id="design-showcase" aria-labelledby="showcase-title">
+      <div class="wrap showcase-inner">
+        <header class="showcase-header">
+          <div class="showcase-heading">
+            <span class="showcase-kicker">DESIGN SKILL</span>
+            <h2 id="showcase-title">一份内容，多种专业呈现</h2>
+            <p class="showcase-summary">内置多种专业设计 <span class="skill-label">SKILL</span>，一键生成不同风格的精美成果，可编辑的PPTX、HTML。</p>
+          </div>
+        </header>
+      </div>
+
+      <div class="wrap showcase-mode-row">
+        <div class="showcase-modes" role="tablist" aria-label="成果类型">
+          <button class="mode-tab is-active" id="mode-ppt" type="button" role="tab" aria-selected="true" aria-controls="ppt-gallery" tabindex="0" data-mode="ppt">AI PPT</button>
+          <button class="mode-tab" id="mode-page" type="button" role="tab" aria-selected="false" aria-controls="page-empty" tabindex="-1" data-mode="page">AI Page</button>
+        </div>
+      </div>
+
+      <div class="showcase-gallery-wrap">
+        <div class="showcase-gallery" id="ppt-gallery" role="tabpanel" aria-labelledby="mode-ppt" tabindex="0" aria-live="polite">
+          <div class="showcase-gallery-status">正在加载 AI PPT 成果…</div>
+        </div>
+        <div class="showcase-page-empty is-hidden" id="page-empty" role="tabpanel" aria-labelledby="mode-page" tabindex="0">
+          <span class="empty-state-mark" aria-hidden="true">PAGE</span>
+          <strong>AI Page 成果即将展示</strong>
+          <p>支持生成 HTML、PDF、长图，真实成果素材补充后将在这里呈现。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="ai-design-section" id="ai-design" aria-labelledby="ai-design-title">
+      <div class="wrap ai-design-inner">
+        <header class="ai-design-header">
+          <span class="showcase-kicker">NATURAL LANGUAGE</span>
+          <h2 id="ai-design-title">怎么改，你说，AI来改</h2>
+          <p>无复杂操作，使用自然语言来让AI进行创作</p>
+        </header>
+
+        <div class="ai-design-stage">
+          <div class="ai-canvas" aria-label="AI 设计结果预览">
+            <div class="ai-canvas-meta"><span>DESIGN CANVAS</span><span class="ai-result-state">就绪</span></div>
+            <div class="ai-result-stack">
+              <div class="ai-raw-content is-visible" data-result="raw">
+                <span class="ai-raw-kicker">MARKETING PLAN</span>
+                <p>Increase investment in search engine advertising, focusing on high-conversion keywords.</p>
+                <p>Host two offline industry salons to enhance brand influence.</p>
+                <p>Launch a user case study collection program through real success stories.</p>
+                <p>Improve lead scoring and follow-up efficiency with marketing automation.</p>
+              </div>
+              <div class="ai-design-grid" data-result="cards" aria-hidden="true">
+                <article class="ai-design-card">
+                  <span class="ai-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.7-3.7"></path></svg></span>
+                  <span class="ai-card-label">SEARCH ADS</span><h3>Search Ads</h3><p>Focus on high-conversion keywords to improve campaign efficiency.</p><strong>Target ROI · 1:6</strong>
+                </article>
+                <article class="ai-design-card">
+                  <span class="ai-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+                  <span class="ai-card-label">OFFLINE SALONS</span><h3>Offline Salons</h3><p>Connect with core audiences and strengthen brand influence.</p><strong>Key Cities · 2</strong>
+                </article>
+                <article class="ai-design-card">
+                  <span class="ai-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M8 13h8M8 17h6"></path></svg></span>
+                  <span class="ai-card-label">CASE STUDIES</span><h3>Case Studies</h3><p>Turn real success stories into content that travels.</p><strong>New This Quarter · 12</strong>
+                </article>
+                <article class="ai-design-card">
+                  <span class="ai-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"></path></svg></span>
+                  <span class="ai-card-label">AUTOMATION</span><h3>Marketing Automation</h3><p>Improve lead scoring and follow-up efficiency.</p><strong>Manual Effort · -30%</strong>
+                </article>
+              </div>
+            </div>
+          </div>
+
+          <div class="ai-chat" aria-label="AI 设计指令演示">
+            <div class="ai-chat-bar"><span class="ai-chat-status" aria-hidden="true"></span><span>AI Design</span><span class="ai-chat-model">DESIGN AGENT</span></div>
+            <div class="ai-chat-body">
+              <div class="ai-chat-history" aria-live="polite">
+                <div class="ai-chat-message" data-message="card"><span>把内容设计为卡片</span></div>
+                <div class="ai-chat-message" data-message="icon"><span>增加 SVG 图标进行点缀</span></div>
+              </div>
+              <div class="ai-composer">
+                <span class="ai-command-text"></span><span class="ai-command-caret" aria-hidden="true"></span>
+                <span class="ai-send-button" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -158,6 +245,6 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>
