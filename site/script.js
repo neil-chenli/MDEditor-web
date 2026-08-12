@@ -214,14 +214,14 @@ async function initShowcase() {
 
   const buildMarquee = (container, images, basePath, altPrefix, options = {}) => {
     const { rows = 1, secondsPerImage = 4 } = options;
-    const createCards = (subset) => subset.map((name, index) => {
+    const createCards = (subset, loading) => subset.map((name, index) => {
       const card = document.createElement('figure');
       card.className = 'showcase-card';
       const image = document.createElement('img');
       image.src = `${basePath}${encodeURIComponent(name)}`;
       image.alt = `${altPrefix}，第 ${index + 1} 张`;
       image.draggable = false;
-      image.loading = 'lazy';
+      image.loading = loading;
       card.appendChild(image);
       return card;
     });
@@ -229,8 +229,8 @@ async function initShowcase() {
     const buildTrack = (subset, reverse) => {
       const track = document.createElement('div');
       track.className = 'showcase-track' + (reverse ? ' showcase-track--reverse' : '');
-      const original = createCards(subset);
-      const cloned = createCards(subset);
+      const original = createCards(subset, 'eager');
+      const cloned = createCards(subset, 'lazy');
       cloned.forEach(c => c.setAttribute('aria-hidden', 'true'));
       original.forEach(c => track.appendChild(c));
       cloned.forEach(c => track.appendChild(c));
@@ -285,33 +285,29 @@ async function initShowcase() {
     });
   });
 
-  // 加载 PPT
-  try {
-    const res = await fetch('assets/showcase/ppt/manifest.json?t=' + Date.now());
-    if (!res.ok) throw new Error('ppt manifest failed');
-    const manifest = await res.json();
-    const images = Array.isArray(manifest.images) ? manifest.images.filter(n => typeof n === 'string') : [];
-    if (images.length) {
-      gallery.classList.add('showcase-gallery--ppt');
-      buildMarquee(gallery, images, 'assets/showcase/ppt/', 'AI PPT 设计成果预览', { rows: 2, secondsPerImage: 8 });
-    }
-    else gallery.innerHTML = '<div class="showcase-gallery-status">暂无可展示的 AI PPT 成果。</div>';
-  } catch {
+  // 并行加载 PPT 和 Page
+  const cacheBust = Date.now();
+  const [pptResult, pageResult] = await Promise.allSettled([
+    fetch('assets/showcase/ppt/manifest.json?t=' + cacheBust).then(r => r.ok ? r.json() : null),
+    fetch('assets/showcase/Page/manifest.json?t=' + cacheBust).then(r => r.ok ? r.json() : null)
+  ]);
+
+  // PPT
+  const pptManifest = pptResult.status === 'fulfilled' ? pptResult.value : null;
+  const pptImages = pptManifest && Array.isArray(pptManifest.images) ? pptManifest.images.filter(n => typeof n === 'string') : [];
+  if (pptImages.length) {
+    gallery.classList.add('showcase-gallery--ppt');
+    buildMarquee(gallery, pptImages, 'assets/showcase/ppt/', 'AI PPT 设计成果预览', { rows: 2, secondsPerImage: 8 });
+  } else {
     gallery.innerHTML = '<div class="showcase-gallery-status">暂无可展示的 AI PPT 成果。</div>';
   }
 
-  // 加载 Page
-  try {
-    const res = await fetch('assets/showcase/Page/manifest.json?t=' + Date.now());
-    if (!res.ok) throw new Error('page manifest failed');
-    const manifest = await res.json();
-    const images = Array.isArray(manifest.images) ? manifest.images.filter(n => typeof n === 'string') : [];
-    if (images.length) {
-      pageGallery.className = 'showcase-gallery showcase-gallery--page is-hidden';
-      buildMarquee(pageGallery, images, 'assets/showcase/Page/', 'AI Page 设计成果预览', { secondsPerImage: 8 });
-    }
-  } catch {
-    // Page 加载失败保持空状态
+  // Page
+  const pageManifest = pageResult.status === 'fulfilled' ? pageResult.value : null;
+  const pageImages = pageManifest && Array.isArray(pageManifest.images) ? pageManifest.images.filter(n => typeof n === 'string') : [];
+  if (pageImages.length) {
+    pageGallery.className = 'showcase-gallery showcase-gallery--page is-hidden';
+    buildMarquee(pageGallery, pageImages, 'assets/showcase/Page/', 'AI Page 设计成果预览', { secondsPerImage: 8 });
   }
 }
 
