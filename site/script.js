@@ -157,9 +157,14 @@ async function initDownload() {
   applyLink(macBtns, info.downloads.macos);
 
   if (info.latestVersion && info.latestVersion !== 'unknown') {
+    const ver = `v${info.latestVersion}`;
+    [...winBtns, ...macBtns].forEach(btn => {
+      const small = btn.querySelector('small');
+      if (small) small.textContent = ver;
+    });
     const date = info.releaseDate ? ` · ${info.releaseDate}` : '';
     metaEls.forEach(el => {
-      el.textContent = `v${info.latestVersion}${date} · 免费下载，支持 Windows 与 macOS`;
+      el.textContent = `${ver}${date} · 免费下载，支持 Windows 与 macOS`;
     });
   }
 }
