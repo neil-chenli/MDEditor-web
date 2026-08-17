@@ -2,10 +2,9 @@
    MDEditor 官网 - 前端逻辑
    ============================================ */
 
-// 下载地址前缀。
-// CDN 未就绪时用相对路径；download.shuyu.com 通了之后
-// 改成 'https://download.shuyu.com/' 即可，其他代码不用动。
-const DL_BASE = '/downloads/';
+// Pages.dev 作为主下载源，阿里云正式站作为备用下载源。
+const PRIMARY_DL_BASE = 'https://mdeditor-web.pages.dev/downloads/';
+const BACKUP_DL_BASE = 'https://md.shuyu.com/downloads/';
 
 document.addEventListener('DOMContentLoaded', () => {
   initTopbar();
@@ -121,7 +120,7 @@ function initAutoDownload() {
     if (!filename) return;
 
     const link = document.createElement('a');
-    link.href = DL_BASE + filename;
+    link.href = PRIMARY_DL_BASE + filename;
     link.download = filename;
     document.body.appendChild(link);
     link.click();
@@ -148,6 +147,8 @@ async function initDownload() {
   if (!info || !info.downloads) {
     markOff(winBtns);
     markOff(macBtns);
+    markOff(winBackupBtns);
+    markOff(macBackupBtns);
     metaEls.forEach(el => {
       el.textContent = '下载信息加载失败，请稍后重试';
     });
@@ -170,13 +171,13 @@ async function initDownload() {
   }
 }
 
-function applyLink(nodes, filename) {
+function applyLink(nodes, filename, base) {
   if (!filename) {
     markOff(nodes);
     return;
   }
   nodes.forEach(el => {
-    el.setAttribute('href', DL_BASE + filename);
+    el.setAttribute('href', base + filename);
     el.classList.remove('is-off');
   });
 }

@@ -1753,6 +1753,10 @@ ul, ol {
 
   .planet-name { font-size: 0.6875rem; }
 
+  .download-option {
+    width: 100%;
+  }
+
   .hero-cta .btn {
     width: 100%;
     min-height: 3rem;
