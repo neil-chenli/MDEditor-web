@@ -9,6 +9,7 @@ const DL_BASE = '/downloads/';
 
 document.addEventListener('DOMContentLoaded', () => {
   initTopbar();
+  initStarlink();
   initCosmosBeams();
   initDownload();
   initAutoDownload();
@@ -401,4 +402,166 @@ function initAiDesign() {
     else runId += 1;
   }, { threshold: 0.35 });
   observer.observe(section);
+}
+
+/* 星链粒子背景动画 */
+function initStarlink() {
+  const container = document.querySelector('.starfield');
+  if (!container) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const canvas = document.createElement('canvas');
+  container.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+
+  const COLORS = [
+    [230, 180, 50],   // 金黄
+    [69, 224, 232],   // 青
+    [80, 200, 120],   // 绿
+    [122, 162, 255],  // 蓝
+    [155, 108, 255],  // 紫
+  ];
+
+  const COUNT = Math.min(25, Math.round(window.innerWidth / 60));
+  const LINK_DIST = 180;
+  const SPEED = 0.12;
+  let w, h, dpr;
+  const particles = [];
+  let time = 0;
+
+  function resize() {
+    dpr = window.devicePixelRatio || 1;
+    w = container.clientWidth;
+    h = container.clientHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function createParticles() {
+    particles.length = 0;
+    for (let i = 0; i < COUNT; i++) {
+      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * SPEED,
+        vy: (Math.random() - 0.5) * SPEED,
+        r: Math.random() * 2.5 + 2,
+        blur: Math.random() * 3 + 1,
+        color,
+        phase: Math.random() * Math.PI * 2,
+        pulseSpeed: 0.005 + Math.random() * 0.008
+      });
+    }
+  }
+
+  let mouse = { x: -9999, y: -9999 };
+  const hero = document.querySelector('.hero');
+  hero.addEventListener('mousemove', e => {
+    const rect = container.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+  hero.addEventListener('mouseleave', () => {
+    mouse.x = -9999;
+    mouse.y = -9999;
+  });
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    time++;
+
+    for (const p of particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < -10) p.x = w + 10;
+      if (p.x > w + 10) p.x = -10;
+      if (p.y < -10) p.y = h + 10;
+      if (p.y > h + 10) p.y = -10;
+      p.alpha = 0.12 + 0.25 * (0.5 + 0.5 * Math.sin(time * p.pulseSpeed + p.phase));
+    }
+
+    // 连线
+    ctx.lineCap = 'round';
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const a = particles[i], b = particles[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < LINK_DIST) {
+          const strength = (1 - dist / LINK_DIST);
+          const alpha = strength * 0.18 * Math.min(a.alpha, b.alpha);
+          const grad = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+          grad.addColorStop(0, `rgba(${a.color[0]},${a.color[1]},${a.color[2]},${alpha})`);
+          grad.addColorStop(1, `rgba(${b.color[0]},${b.color[1]},${b.color[2]},${alpha})`);
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = strength * 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // 鼠标连线
+    const MOUSE_DIST = 170;
+    for (const p of particles) {
+      const dx = p.x - mouse.x;
+      const dy = p.y - mouse.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < MOUSE_DIST) {
+        const strength = 1 - dist / MOUSE_DIST;
+        const alpha = strength * 0.55;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.strokeStyle = `rgba(${p.color[0]},${p.color[1]},${p.color[2]},${alpha})`;
+        ctx.lineWidth = strength * 1.2;
+        ctx.stroke();
+      }
+    }
+
+    // 粒子光球
+    for (const p of particles) {
+      const [r, g, b] = p.color;
+      // 外圈发光环
+      const ringRadius = p.r * 6;
+      const ring = ctx.createRadialGradient(p.x, p.y, ringRadius * 0.55, p.x, p.y, ringRadius);
+      ring.addColorStop(0, `rgba(${r},${g},${b},${p.alpha * 0.12})`);
+      ring.addColorStop(0.5, `rgba(${r},${g},${b},${p.alpha * 0.06})`);
+      ring.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, ringRadius, 0, Math.PI * 2);
+      ctx.fillStyle = ring;
+      ctx.fill();
+      // 内层辉光
+      const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3);
+      glow.addColorStop(0, `rgba(${r},${g},${b},${p.alpha * 0.5})`);
+      glow.addColorStop(0.5, `rgba(${r},${g},${b},${p.alpha * 0.1})`);
+      glow.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+      ctx.fillStyle = glow;
+      ctx.fill();
+      // 核心实心点
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${p.alpha * 0.9})`;
+      ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  createParticles();
+  draw();
+
+  window.addEventListener('resize', () => {
+    resize();
+    createParticles();
+  });
 }
