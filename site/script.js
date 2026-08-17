@@ -136,6 +136,8 @@ function isMacOS() {
 async function initDownload() {
   const winBtns = document.querySelectorAll('.js-dl-win');
   const macBtns = document.querySelectorAll('.js-dl-mac');
+  const winBackupBtns = document.querySelectorAll('.js-dl-win-backup');
+  const macBackupBtns = document.querySelectorAll('.js-dl-mac-backup');
   const metaEls = document.querySelectorAll('.js-version');
 
   downloadInfoPromise = fetch('/version.json?t=' + Date.now())
@@ -155,8 +157,10 @@ async function initDownload() {
     return;
   }
 
-  applyLink(winBtns, info.downloads.windows);
-  applyLink(macBtns, info.downloads.macos);
+  applyLink(winBtns, info.downloads.windows, PRIMARY_DL_BASE);
+  applyLink(macBtns, info.downloads.macos, PRIMARY_DL_BASE);
+  applyLink(winBackupBtns, info.downloads.windows, BACKUP_DL_BASE);
+  applyLink(macBackupBtns, info.downloads.macos, BACKUP_DL_BASE);
 
   if (info.latestVersion && info.latestVersion !== 'unknown') {
     const ver = `v${info.latestVersion}`;
