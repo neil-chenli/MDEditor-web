@@ -279,11 +279,11 @@ ul, ol {
 }
 
 .backup-download {
+  margin-top: 5px;
   color: var(--text-3);
   font-size: 12px;
   line-height: 1.25;
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
+  text-decoration: none;
   transition: color 0.15s ease;
 }
 
