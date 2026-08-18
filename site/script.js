@@ -223,6 +223,8 @@ async function initShowcase() {
     if (active) updateIndicator(active);
   });
 
+  const isMobile = window.innerWidth <= 760;
+
   const buildMarquee = (container, images, basePath, altPrefix, options = {}) => {
     const { rows = 1, secondsPerImage = 4 } = options;
     const createCards = (subset, loading) => subset.map((name, index) => {
@@ -233,6 +235,7 @@ async function initShowcase() {
       image.alt = `${altPrefix}，第 ${index + 1} 张`;
       image.draggable = false;
       image.loading = loading;
+      image.onerror = () => { card.style.display = 'none'; };
       card.appendChild(image);
       return card;
     });
@@ -251,7 +254,8 @@ async function initShowcase() {
 
     container.replaceChildren();
 
-    if (rows === 2 && images.length >= 2) {
+    const effectiveRows = isMobile ? 1 : rows;
+    if (effectiveRows === 2 && images.length >= 2) {
       const mid = Math.ceil(images.length / 2);
       const row1 = images.slice(0, mid);
       const row2 = images.slice(mid);
@@ -296,19 +300,32 @@ async function initShowcase() {
     });
   });
 
+  // 带超时的 fetch（手机弱网保护）
+  const fetchWithTimeout = (url, ms = 5000) => {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), ms);
+    return fetch(url, { signal: controller.signal })
+      .then(r => { clearTimeout(timer); return r.ok ? r.json() : null; })
+      .catch(() => { clearTimeout(timer); return null; });
+  };
+
+  // 硬编码兜底图片列表（manifest.json 加载失败时使用）
+  const FALLBACK_PPT = ["ppt1.jpg","ppt2.jpg","ppt3.jpg","ppt4.jpg","PPT5.jpg","ppt6.jpg","ppt7.jpg","ppt8.jpg","ppt9.jpg","ppt10.jpg","ppt11.jpg","ppt12.jpg","ppt13.jpg","ppt14.jpg","ppt15.jpg","ppt16.jpg"];
+
   // 并行加载 PPT 和 Page
   const cacheBust = Date.now();
   const [pptResult, pageResult] = await Promise.allSettled([
-    fetch('assets/showcase/ppt/manifest.json?t=' + cacheBust).then(r => r.ok ? r.json() : null),
-    fetch('assets/showcase/Page/manifest.json?t=' + cacheBust).then(r => r.ok ? r.json() : null)
+    fetchWithTimeout('assets/showcase/ppt/manifest.json?t=' + cacheBust),
+    fetchWithTimeout('assets/showcase/Page/manifest.json?t=' + cacheBust)
   ]);
 
   // PPT
   const pptManifest = pptResult.status === 'fulfilled' ? pptResult.value : null;
-  const pptImages = pptManifest && Array.isArray(pptManifest.images) ? pptManifest.images.filter(n => typeof n === 'string') : [];
+  let pptImages = pptManifest && Array.isArray(pptManifest.images) ? pptManifest.images.filter(n => typeof n === 'string') : [];
+  if (!pptImages.length) pptImages = FALLBACK_PPT;
   if (pptImages.length) {
     gallery.classList.add('showcase-gallery--ppt');
-    buildMarquee(gallery, pptImages, 'assets/showcase/ppt/', 'AI PPT 设计成果预览', { rows: 2, secondsPerImage: 8 });
+    buildMarquee(gallery, pptImages, 'assets/showcase/ppt/', 'AI PPT 设计成果预览', { rows: 2, secondsPerImage: isMobile ? 3 : 8 });
   } else {
     gallery.innerHTML = '<div class="showcase-gallery-status">暂无可展示的 AI PPT 成果。</div>';
   }
@@ -318,7 +335,7 @@ async function initShowcase() {
   const pageImages = pageManifest && Array.isArray(pageManifest.images) ? pageManifest.images.filter(n => typeof n === 'string') : [];
   if (pageImages.length) {
     pageGallery.className = 'showcase-gallery showcase-gallery--page is-hidden';
-    buildMarquee(pageGallery, pageImages, 'assets/showcase/Page/', 'AI Page 设计成果预览', { secondsPerImage: 8 });
+    buildMarquee(pageGallery, pageImages, 'assets/showcase/Page/', 'AI Page 设计成果预览', { secondsPerImage: isMobile ? 3 : 8 });
   }
 }
 

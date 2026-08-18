@@ -984,17 +984,12 @@ ul, ol {
   .mode-tab { flex: 1; min-width: 0; min-height: 2.75rem; }
   .showcase-gallery-wrap { width: 100%; flex: none; display: grid; }
   .showcase-gallery {
-    padding: 0.8rem 1.25rem 1.2rem;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+    padding: 0.8rem 0 1.2rem;
+    overflow: hidden;
     -webkit-mask-image: none;
     mask-image: none;
   }
-  .showcase-gallery::-webkit-scrollbar { display: none; }
-  .showcase-card { flex-basis: min(84vw, 24rem); scroll-snap-align: center; }
+  .showcase-card { flex-basis: min(84vw, 24rem); }
   .showcase-page-empty { min-height: 19rem; margin-right: 1.25rem; }
 }
 
