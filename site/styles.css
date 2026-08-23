@@ -518,7 +518,7 @@ ul, ol {
   vector-effect: non-scaling-stroke;
   filter: drop-shadow(0 0 4px var(--meteor-color, #7aa2ff))
           drop-shadow(0 0 10px var(--meteor-color, #7aa2ff));
-  animation: meteor 7.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: meteor 7.5s linear infinite;
 }
 
 /* 入口多色 */
