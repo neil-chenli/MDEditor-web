@@ -40,13 +40,13 @@ function initCosmosBeams() {
     {
       planets: [...cosmos.querySelectorAll('.orbit-in .planet')],
       staticGroup: svg.querySelector('.js-beam-in-static'),
-      pulseGroup: svg.querySelector('.js-beam-in-pulse'),
+      meteorGroup: svg.querySelector('.js-beam-in-meteor'),
       incoming: true
     },
     {
       planets: [...cosmos.querySelectorAll('.orbit-out .planet')],
       staticGroup: svg.querySelector('.js-beam-out-static'),
-      pulseGroup: svg.querySelector('.js-beam-out-pulse'),
+      meteorGroup: svg.querySelector('.js-beam-out-meteor'),
       incoming: false
     }
   ];
@@ -59,7 +59,7 @@ function initCosmosBeams() {
 
   sides.forEach(side => {
     side.staticGroup.replaceChildren(...side.planets.map(makePath));
-    side.pulseGroup.replaceChildren(...side.planets.map(makePath));
+    side.meteorGroup.replaceChildren(...side.planets.map(makePath));
   });
 
   const update = () => {
@@ -67,7 +67,7 @@ function initCosmosBeams() {
     const coreRect = core.getBoundingClientRect();
     svg.setAttribute('viewBox', `0 0 ${Math.max(1, cosmosRect.width)} ${Math.max(1, cosmosRect.height)}`);
 
-    sides.forEach(({ planets, staticGroup, pulseGroup, incoming }) => {
+    sides.forEach(({ planets, staticGroup, meteorGroup, incoming }) => {
       const corePoint = {
         x: (incoming ? coreRect.left : coreRect.right) - cosmosRect.left,
         y: coreRect.top + coreRect.height / 2 - cosmosRect.top
@@ -85,7 +85,7 @@ function initCosmosBeams() {
         const bend = Math.max(42, Math.abs(end.x - start.x) * 0.42);
         const d = `M ${start.x} ${start.y} C ${start.x + bend * direction} ${start.y}, ${end.x - bend * direction} ${end.y}, ${end.x} ${end.y}`;
         staticGroup.children[index].setAttribute('d', d);
-        pulseGroup.children[index].setAttribute('d', d);
+        meteorGroup.children[index].setAttribute('d', d);
       });
     });
   };
