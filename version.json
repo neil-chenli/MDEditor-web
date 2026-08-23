@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-23T09:41:18.446Z",
+  "generatedAt": "2026-08-23T09:48:22.639Z",
   "latestVersion": "1.0.709",
   "releaseDate": "2026-08-23",
   "files": [
@@ -8,18 +8,18 @@
       "version": "1.0.709",
       "platform": "windows",
       "size": 12130485,
-      "modified": "2026-08-23T09:40:17.595Z"
+      "modified": "2026-08-23T09:46:27.367Z"
     },
     {
-      "filename": "MDEditor_1.0.704_aarch64.dmg",
-      "version": "1.0.704",
+      "filename": "MDEditor_1.0.709_aarch64.dmg",
+      "version": "1.0.709",
       "platform": "macos",
-      "size": 13123056,
-      "modified": "2026-08-18T16:14:06.000Z"
+      "size": 13464685,
+      "modified": "2026-08-23T09:46:04.193Z"
     }
   ],
   "downloads": {
     "windows": "MDEditor_1.0.709_x64-setup.zip",
-    "macos": "MDEditor_1.0.704_aarch64.dmg"
+    "macos": "MDEditor_1.0.709_aarch64.dmg"
   }
 }
