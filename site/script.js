@@ -163,11 +163,17 @@ async function initDownload() {
   applyLink(macBackupBtns, info.downloads.macos, BACKUP_DL_BASE);
 
   if (info.latestVersion && info.latestVersion !== 'unknown') {
-    const ver = `v${info.latestVersion}`;
-    [...winBtns, ...macBtns].forEach(btn => {
+    const winVer = info.downloads.windows ? info.downloads.windows.match(/_(\d+\.\d+\.\d+)_/)?.[1] : null;
+    const macVer = info.downloads.macos ? info.downloads.macos.match(/_(\d+\.\d+\.\d+)_/)?.[1] : null;
+    winBtns.forEach(btn => {
       const small = btn.querySelector('small');
-      if (small) small.textContent = ver;
+      if (small && winVer) small.textContent = `v${winVer}`;
     });
+    macBtns.forEach(btn => {
+      const small = btn.querySelector('small');
+      if (small && macVer) small.textContent = `v${macVer}`;
+    });
+    const ver = `v${info.latestVersion}`;
     const date = info.releaseDate ? ` · ${info.releaseDate}` : '';
     metaEls.forEach(el => {
       el.textContent = `${ver}${date} · 免费下载，支持 Windows 与 macOS`;
