@@ -1,5 +1,6 @@
 # IDE / Editor
-.trae/
+.trae/*
+!.trae/skills/
 .vscode/
 .idea/
 
