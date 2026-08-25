@@ -29,13 +29,15 @@ description: "执行 MDEditor 发版流程：打包、复制安装包到 downloa
 
 ### macOS 环境（检测到 darwin）
 
-源目录：需要确认，通常为 `~/Projects/MDEditor/src-tauri/target/release/bundle/dmg` 或类似路径
+源目录：`/Users/neil/Project/MDEditor/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg`
 
-1. **查找最新 dmg**：扫描源目录，找到文件名匹配 `MDEditor_*_aarch64.dmg` 且版本号最大的文件
-2. **清理旧文件**：删除 `downloads` 目录中旧的 macOS dmg 文件（匹配 `*_aarch64.dmg`）
-3. **复制新文件**：将 dmg 复制到项目的 `downloads` 目录
-4. **更新版本信息**：运行 `node scripts/generate-version.js` 更新 `version.json`
-5. **展示结果**：显示新版本号、文件大小等信息
+1. **检查源目录**：确认源目录存在；如果不存在，立即报错并停止执行。
+2. **查找最新 dmg**：扫描源目录中匹配 `MDEditor_*_aarch64.dmg` 的文件，从文件名解析 `1.0.xxx` 版本号，按版本号中的数字降序排序并选择最新文件；如果没有匹配文件，立即报错并停止执行。
+3. **清理旧文件**：删除 `downloads` 目录中旧的 macOS DMG 文件，仅匹配 `MDEditor_*_aarch64.dmg`，不要删除其他平台安装包。
+4. **复制新文件**：将选中的 DMG 复制到项目的 `downloads` 目录，并保持原文件名。
+5. **验证复制结果**：确认目标文件存在且文件大小大于 0；验证失败时立即报错并停止执行。
+6. **更新版本信息**：运行 `node scripts/generate-version.js` 更新 `version.json`。
+7. **展示结果**：显示版本号、文件名和文件大小。
 
 ### 通用后续步骤（可选）
 
