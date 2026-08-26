@@ -25,7 +25,8 @@ description: "执行 MDEditor 发版流程：打包、复制安装包到 downloa
 3. **清理旧文件**：删除 `downloads` 目录中旧的 Windows zip 文件（匹配 `*_x64-setup.zip`）
 4. **复制新文件**：将压缩好的 zip 复制到项目的 `downloads` 目录
 5. **更新版本信息**：运行 `node scripts/generate-version.js` 更新 `version.json`
-6. **展示结果**：显示新版本号、文件大小等信息
+6. **更新更新日志**：运行 `node scripts/generate-changelog.js` 更新 `site/changelog.json`
+7. **展示结果**：显示新版本号、文件大小等信息
 
 ### macOS 环境（检测到 darwin）
 
@@ -37,12 +38,48 @@ description: "执行 MDEditor 发版流程：打包、复制安装包到 downloa
 4. **复制新文件**：将选中的 DMG 复制到项目的 `downloads` 目录，并保持原文件名。
 5. **验证复制结果**：确认目标文件存在且文件大小大于 0；验证失败时立即报错并停止执行。
 6. **更新版本信息**：运行 `node scripts/generate-version.js` 更新 `version.json`。
-7. **展示结果**：显示版本号、文件名和文件大小。
+7. **更新更新日志**：运行 `node scripts/generate-changelog.js` 更新 `site/changelog.json`。
+8. **展示结果**：显示版本号、文件名和文件大小。
+
+### 发布版本信息到服务端
+
+在本地文件更新完成后，调用服务端接口发布版本信息。
+
+**接口：** `POST https://api.shuyu.com/api/client/release`
+
+**认证：** `Authorization: Bearer mde-release-x7k9m2p4w8n1v3b6`
+
+**请求体字段：**
+- `platform`: 当前平台（"windows" 或 "mac"）
+- `version`: 新版本号（如 "1.0.715"）
+- `release_date`: 从 `C:\NeilData\Project\MDEditor\docs\版本升级摘要说明.md`（Windows）或 `~/Project/MDEditor/docs/版本升级摘要说明.md`（macOS）中解析对应版本的日期，格式为 `YYYY-MM-DDT00:00:00`（如 "2026-08-26T00:00:00"）
+- `release_notes`: 从同一文件中解析对应版本号下的 bullet list，将所有条目用换行符拼接为一段文本
+- `download_url`: 固定填写 `https://md.shuyu.com/`
+- `is_force_update`: false
+
+**release_notes 解析规则：**
+1. 读取 `版本升级摘要说明.md`
+2. 找到 `## {version}` 标题（如 `## 1.0.715`）
+3. 跳过 `**日期**：xxx` 行
+4. 提取该标题下所有 `- xxx` 开头的行，去掉前缀 `- `，用换行符 `\n` 拼接
+
+**示例请求：**
+```json
+{
+  "platform": "windows",
+  "version": "1.0.715",
+  "release_date": "2026-08-26",
+  "release_notes": "修复-首页 AI 写作输入\"做成 PPT\"等短指令时可能提示服务不可用的问题。\n修复-PPT 结束页\"感谢聆听\"重复显示的问题。\n优化-PPT 章节页生成规则，保持大纲生成与直接生成 PPT 的结果一致。",
+  "download_url": "https://md.shuyu.com/",
+  "is_force_update": false
+}
+```
+
+**错误处理：** 如果接口调用失败（非 2xx），输出错误信息但不中断整体流程（本地文件已更新成功）。
 
 ### 通用后续步骤（可选）
 
-- **推送更新**：如果用户在指令中要求推送（如"发布新版并推送"、"发版后推一下"），则执行 git add downloads/ version.json → git commit → git push。如果用户没有明确要求推送，不执行此步骤。
-- **更新服务端版本信息**：调用服务端接口更新版本（接口待开发，后续补充）
+- **推送更新**：如果用户在指令中要求推送（如"发布新版并推送"、"发版后推一下"），则执行 git add downloads/ version.json site/changelog.json → git commit → git push。如果用户没有明确要求推送，不执行此步骤。
 
 ## 执行要求
 
