@@ -27,7 +27,7 @@ jobs:
           node scripts/generate-showcase-manifest.js
           rm -rf deploy deploy.tar.gz
           mkdir -p deploy/downloads
-          cp site/index.html site/styles.css site/script.js deploy/
+          cp site/index.html site/changelog.html site/styles.css site/script.js site/changelog.json deploy/
           cp -r site/assets deploy/assets
           cp version.json deploy/
           cp downloads/* deploy/downloads/
