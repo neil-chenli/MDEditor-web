@@ -43,7 +43,20 @@ description: "执行 MDEditor 发版流程：打包、复制安装包到 downloa
 
 ### 发布版本信息到服务端
 
-在本地文件更新完成后，调用服务端接口发布版本信息。
+**前置条件：等待线上部署完成**
+
+在推送代码后，安装包需要经过 GitHub Actions 部署到服务器才能被下载。必须先验证线上文件可用，再发布版本记录。
+
+**验证步骤：**
+1. 根据平台构造下载链接：
+   - Windows: `https://md.shuyu.com/downloads/MDEditor_{version}_x64-setup.zip`
+   - macOS: `https://md.shuyu.com/downloads/MDEditor_{version}_aarch64.dmg`
+2. 每隔 15 秒发送一次 HEAD 请求检测该 URL 是否返回 200
+3. 最多轮询 5 分钟（20 次）
+4. 如果 5 分钟内检测通过（HTTP 200），继续发布版本信息
+5. 如果 5 分钟后仍未通过，输出警告并询问用户是否继续等待或跳过此步骤
+
+**验证通过后，调用服务端接口发布版本信息：**
 
 **接口：** `POST https://api.shuyu.com/api/client/release`
 
@@ -80,6 +93,12 @@ description: "执行 MDEditor 发版流程：打包、复制安装包到 downloa
 ### 通用后续步骤（可选）
 
 - **推送更新**：如果用户在指令中要求推送（如"发布新版并推送"、"发版后推一下"），则执行 git add downloads/ version.json site/changelog.json → git commit → git push。如果用户没有明确要求推送，不执行此步骤。
+
+**注意流程时序：** 当用户要求推送时，完整执行顺序为：
+1. 本地文件更新（压缩、复制、generate-version、generate-changelog）
+2. git add → commit → push（触发线上部署）
+3. 等待线上部署完成（轮询检测下载链接）
+4. 验证通过后，调用服务端 release 接口
 
 ## 执行要求
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-26T08:49:54.558Z",
+  "generatedAt": "2026-08-26T09:30:19.236Z",
   "latestVersion": "1.0.715",
   "releaseDate": "2026-08-26",
   "files": [
@@ -8,14 +8,14 @@
       "version": "1.0.715",
       "platform": "macos",
       "size": 15509599,
-      "modified": "2026-08-26T08:49:54.452Z"
+      "modified": "2026-08-26T08:54:45.316Z"
     },
     {
       "filename": "MDEditor_1.0.715_x64-setup.zip",
       "version": "1.0.715",
       "platform": "windows",
       "size": 14170137,
-      "modified": "2026-08-26T08:44:54.486Z"
+      "modified": "2026-08-25T18:10:59.632Z"
     }
   ],
   "downloads": {
