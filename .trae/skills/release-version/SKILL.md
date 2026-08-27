@@ -90,11 +90,11 @@ description: "执行 MDEditor 发版流程：打包、复制安装包到 downloa
 
 **错误处理：** 如果接口调用失败（非 2xx），输出错误信息但不中断整体流程（本地文件已更新成功）。
 
-### 通用后续步骤（可选）
+### 推送更新（必须执行）
 
-- **推送更新**：如果用户在指令中要求推送（如"发布新版并推送"、"发版后推一下"），则执行 git add downloads/ version.json site/changelog.json → git commit → git push。如果用户没有明确要求推送，不执行此步骤。
+发版流程默认包含推送，无需用户额外指示。执行 git add downloads/ version.json site/changelog.json → git commit → git push。
 
-**注意流程时序：** 当用户要求推送时，完整执行顺序为：
+**完整执行顺序：**
 1. 本地文件更新（压缩、复制、generate-version、generate-changelog）
 2. git add → commit → push（触发线上部署）
 3. 等待线上部署完成（轮询检测下载链接）
