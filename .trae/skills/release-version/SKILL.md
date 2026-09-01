@@ -84,7 +84,7 @@ description: "执行 MDEditor 发版流程：打包、复制安装包到 downloa
   "release_date": "2026-08-26",
   "release_notes": "修复-首页 AI 写作输入\"做成 PPT\"等短指令时可能提示服务不可用的问题。\n修复-PPT 结束页\"感谢聆听\"重复显示的问题。\n优化-PPT 章节页生成规则，保持大纲生成与直接生成 PPT 的结果一致。",
   "download_url": "https://md.shuyu.com/",
-  "is_force_update": false
+  "is_force_update": true
 }
 ```
 
