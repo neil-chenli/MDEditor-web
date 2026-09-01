@@ -68,7 +68,7 @@ description: "执行 MDEditor 发版流程：打包、复制安装包到 downloa
 - `release_date`: 从 `C:\NeilData\Project\MDEditor\docs\版本升级摘要说明.md`（Windows）或 `~/Project/MDEditor/docs/版本升级摘要说明.md`（macOS）中解析对应版本的日期，格式为 `YYYY-MM-DDT00:00:00`（如 "2026-08-26T00:00:00"）
 - `release_notes`: 从同一文件中解析对应版本号下的 bullet list，将所有条目用换行符拼接为一段文本
 - `download_url`: 固定填写 `https://md.shuyu.com/`
-- `is_force_update`: false
+- `is_force_update`: true
 
 **release_notes 解析规则：**
 1. 读取 `版本升级摘要说明.md`
